@@ -1,0 +1,17 @@
+xtrans (1.0.0-1) UNRELEASED; urgency=low
+
+  * First upload to Debian
+
+ -- David Nusinow <dnusinow@debian.org>  Thu, 29 Dec 2005 20:55:24 -0500
+
+xtrans (0.99.0-1) breezy; urgency=low
+
+  * Bump to new upstream.
+
+ -- Daniel Stone <daniel.stone@ubuntu.com>  Wed, 10 Aug 2005 20:04:46 +1000
+
+xtrans (0.2+cvs.20050513-1) breezy; urgency=low
+
+  * First xtrans release.
+
+ -- Daniel Stone <daniel.stone@ubuntu.com>  Sun, 13 May 2005 00:12:17 +1000
