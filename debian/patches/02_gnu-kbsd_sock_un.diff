@@ -1,0 +1,33 @@
+$Id: 003_gnu-kbsd_sock_un.diff 1054 2006-01-10 23:42:01Z ender $
+
+Index: Xtranssock.c
+===================================================================
+--- Xtranssock.c.orig	2006-01-11 00:29:04.000000000 +0100
++++ Xtranssock.c	2006-01-11 00:29:22.000000000 +0100
+@@ -1111,7 +1111,7 @@
+     sockname.sun_len = strlen(sockname.sun_path);
+     namelen = SUN_LEN(&sockname);
+ #else
+-    namelen = strlen(sockname.sun_path) + sizeof(sockname.sun_family);
++    namelen = strlen(sockname.sun_path) + offsetof(struct sockaddr_un, sun_path);
+ #endif
+ 
+     unlink (sockname.sun_path);
+@@ -2001,7 +2001,7 @@
+     sockname.sun_len = strlen (sockname.sun_path);
+     namelen = SUN_LEN (&sockname);
+ #else
+-    namelen = strlen (sockname.sun_path) + sizeof (sockname.sun_family);
++    namelen = strlen (sockname.sun_path) + offsetof(struct sockaddr_un, sun_path);
+ #endif
+ 
+ 
+@@ -2015,7 +2015,7 @@
+ 	return TRANS_CONNECT_FAILED;
+     }
+     old_namelen = strlen (old_sockname.sun_path) +
+-	sizeof (old_sockname.sun_family);
++    	offsetof(struct sockaddr_un, sun_path);
+ #endif
+ 
+ 

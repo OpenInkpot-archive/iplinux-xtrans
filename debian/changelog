@@ -2,8 +2,9 @@ xtrans (1.0.0-2) experimental; urgency=low
 
   * Port patches from trunk
     + hurd/804_maxhostnamelen.diff
+    + freebsd/003_gnu-kbsd_sock_un.diff
 
- -- David Nusinow <dnusinow@debian.org>  Sat,  4 Mar 2006 19:56:24 -0500
+ -- David Nusinow <dnusinow@debian.org>  Sun,  5 Mar 2006 20:51:47 -0500
 
 xtrans (1.0.0-1) experimental; urgency=low
 
