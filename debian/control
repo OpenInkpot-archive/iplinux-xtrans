@@ -8,7 +8,7 @@ Standards-Version: 3.6.1.0
 
 Package: xtrans-dev
 Architecture: all
-Pre-Depends: x11-common (>= 0.99)
+Pre-Depends: x11-common (>= 1:7.0)
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X transport library (development files)
  xtrans includes a number of routines to make X implementations

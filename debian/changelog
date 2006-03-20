@@ -1,3 +1,9 @@
+xtrans (1.0.0-3) experimental; urgency=low
+
+  * Bump x11-common version requirement. Thanks Kurt Roeckx. (closes: #351779)
+
+ -- David Nusinow <dnusinow@debian.org>  Sun, 19 Mar 2006 23:29:08 -0500
+
 xtrans (1.0.0-2) experimental; urgency=low
 
   * Port patches from trunk
