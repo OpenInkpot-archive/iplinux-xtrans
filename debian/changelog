@@ -1,3 +1,9 @@
+xtrans (1.0.0-4) unstable; urgency=low
+
+  * Upload to unstable
+
+ -- David Nusinow <dnusinow@debian.org>  Thu, 23 Mar 2006 22:46:37 -0500
+
 xtrans (1.0.0-3) experimental; urgency=low
 
   * Bump x11-common version requirement. Thanks Kurt Roeckx. (closes: #351779)
