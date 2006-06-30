@@ -1,0 +1,31 @@
+Index: xtrans/Xtranslcl.c
+===================================================================
+--- xtrans.orig/Xtranslcl.c	2006-06-30 02:02:58.000000000 -0400
++++ xtrans/Xtranslcl.c	2006-06-30 02:04:46.000000000 -0400
+@@ -360,7 +360,10 @@
+ 	uid_t       saved_euid;
+ 
+ 	saved_euid = geteuid();
+-	setuid( getuid() ); /** sets the euid to the actual/real uid **/
++    /** sets the euid to the actual/real uid **/
++    if (setuid( getuid() ) == -1) {
++        exit(1);
++    }
+ 	if( chown( slave, saved_euid, -1 ) < 0 ) {
+ 		exit( 1 );
+ 		}
+@@ -369,7 +372,13 @@
+     }
+ 
+     waitpid(saved_pid, &exitval, 0);
+-
++    if (WIFEXITED(exitval) && WEXITSTATUS(exitval) != 0) {
++         close(fd);
++         close(server);
++         PRMSG(1, "PTSOpenClient: cannot set the owner of %s\n",
++               slave, 0, 0);
++         return(-1);
++    }
+     if (chmod(slave, 0666) < 0) {
+ 	close(fd);
+ 	close(server);
