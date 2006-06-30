@@ -3,8 +3,11 @@ xtrans (1.0.0-6) unstable; urgency=high
   * Security update. Fix for setuid privledge escalation vulernabilities.
     See http://lists.freedesktop.org/archives/xorg/2006-June/016146.html for
     the full advisory.
+  * Bump standards version to 3.7.2.0
+  * Change build-depends-indep to build-depends because of quilt and debhelper
+    being used in the clean target
 
- -- David Nusinow <dnusinow@debian.org>  Fri, 30 Jun 2006 02:06:09 -0400
+ -- David Nusinow <dnusinow@debian.org>  Fri, 30 Jun 2006 02:15:39 -0400
 
 xtrans (1.0.0-5) unstable; urgency=low
 
