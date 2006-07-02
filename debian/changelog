@@ -1,0 +1,64 @@
+xtrans (1.0.1-1) experimental; urgency=low
+
+  * New upstream release
+  * Remove security patch from previous upload. It's now included in this
+    release by upstream.
+
+ -- David Nusinow <dnusinow@debian.org>  Sat,  1 Jul 2006 23:21:32 -0400
+
+xtrans (1.0.0-6) unstable; urgency=high
+
+  * Security update. Fix for setuid privledge escalation vulernabilities.
+    See http://lists.freedesktop.org/archives/xorg/2006-June/016146.html for
+    the full advisory.
+  * Bump standards version to 3.7.2.0
+  * Change build-depends-indep to build-depends because of quilt and debhelper
+    being used in the clean target
+
+ -- David Nusinow <dnusinow@debian.org>  Fri, 30 Jun 2006 02:15:39 -0400
+
+xtrans (1.0.0-5) unstable; urgency=low
+
+  * Reorder makeshlib command in rules file so that ldconfig is run
+    properly. Thanks Drew Parsons and Steve Langasek.
+  * Add quilt to build-depends
+
+ -- David Nusinow <dnusinow@debian.org>  Wed, 19 Apr 2006 02:48:22 -0400
+
+xtrans (1.0.0-4) unstable; urgency=low
+
+  * Upload to unstable
+
+ -- David Nusinow <dnusinow@debian.org>  Thu, 23 Mar 2006 22:46:37 -0500
+
+xtrans (1.0.0-3) experimental; urgency=low
+
+  * Bump x11-common version requirement. Thanks Kurt Roeckx. (closes: #351779)
+
+ -- David Nusinow <dnusinow@debian.org>  Sun, 19 Mar 2006 23:29:08 -0500
+
+xtrans (1.0.0-2) experimental; urgency=low
+
+  * Port patches from trunk
+    + hurd/804_maxhostnamelen.diff
+    + freebsd/003_gnu-kbsd_sock_un.diff
+
+ -- David Nusinow <dnusinow@debian.org>  Sun,  5 Mar 2006 20:51:47 -0500
+
+xtrans (1.0.0-1) experimental; urgency=low
+
+  * First upload to Debian
+
+ -- David Nusinow <dnusinow@debian.org>  Thu, 29 Dec 2005 20:55:24 -0500
+
+xtrans (0.99.0-1) breezy; urgency=low
+
+  * Bump to new upstream.
+
+ -- Daniel Stone <daniel.stone@ubuntu.com>  Wed, 10 Aug 2005 20:04:46 +1000
+
+xtrans (0.2+cvs.20050513-1) breezy; urgency=low
+
+  * First xtrans release.
+
+ -- Daniel Stone <daniel.stone@ubuntu.com>  Sun, 13 May 2005 00:12:17 +1000
