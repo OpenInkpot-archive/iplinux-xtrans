@@ -1,3 +1,22 @@
+xtrans (1.0.1-2) UNRELEASED; urgency=low
+
+  * Test for obj-$(DEB_BUILD_GNU_TYPE) before creating it during build;
+    idempotency fix. 
+
+ -- Andres Salomon <dilinger@debian.org>  Mon, 17 Jul 2006 00:20:27 -0400
+
+xtrans (1.0.1-1) experimental; urgency=low
+
+  * New upstream release
+  * Remove security patch from previous upload. It's now included in this
+    release by upstream.
+  * Append a super-minor version number to x11-common pre-depends to shut
+    lintian up
+  * Bump debhelper compat to 5
+  * Run dh_install with --list-missing
+
+ -- David Nusinow <dnusinow@debian.org>  Sat,  1 Jul 2006 23:27:34 -0400
+
 xtrans (1.0.0-6) unstable; urgency=high
 
   * Security update. Fix for setuid privledge escalation vulernabilities.
