@@ -1,0 +1,30 @@
+From: Alan Coopersmith <alan.coopersmith@sun.com>
+Date: Fri, 25 Aug 2006 00:40:24 +0000 (-0700)
+Subject: Use SUN_LEN if it is defined on non-BSD44SOCKETS systems
+X-Git-Url: http://gitweb.freedesktop.org/?p=xorg/lib/libxtrans.git;a=commitdiff;h=5d006baadf213e91f131ffedc53c88a973fb1cba
+
+Use SUN_LEN if it is defined on non-BSD44SOCKETS systems
+---
+
+--- a/Xtranssock.c
++++ b/Xtranssock.c
+@@ -1106,6 +1106,9 @@ TRANS(SocketUNIXCreateListener) (XtransC
+ 
+ #if (defined(BSD44SOCKETS) || defined(__UNIXWARE__)) && !defined(Lynx)
+     sockname.sun_len = strlen(sockname.sun_path);
++#endif
++
++#if defined(BSD44SOCKETS) || defined(SUN_LEN)
+     namelen = SUN_LEN(&sockname);
+ #else
+     namelen = strlen(sockname.sun_path) + offsetof(struct sockaddr_un, sun_path);
+@@ -1996,6 +1999,9 @@ TRANS(SocketUNIXConnect) (XtransConnInfo
+ 
+ #if (defined(BSD44SOCKETS) || defined(__UNIXWARE__)) && !defined(Lynx)
+     sockname.sun_len = strlen (sockname.sun_path);
++#endif
++
++#if defined(BSD44SOCKETS) || defined(SUN_LEN)
+     namelen = SUN_LEN (&sockname);
+ #else
+     namelen = strlen (sockname.sun_path) + offsetof(struct sockaddr_un, sun_path);
