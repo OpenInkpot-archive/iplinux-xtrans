@@ -1,3 +1,0 @@
-01_hurd_maxhostnamelen.diff -p3
-02_gnu-kbsd_sock_un.diff -p0
-02_sunlen_nonbsd_sock.patch
