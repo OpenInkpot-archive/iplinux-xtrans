@@ -1,3 +1,10 @@
+xtrans (1.0.3-1) unstable; urgency=low
+
+  * New upstream release.
+    + All our patches are now included upstream.
+
+ -- Julien Cristau <julien.cristau@ens-lyon.org>  Wed, 31 Jan 2007 02:06:08 +0100
+
 xtrans (1.0.1-3) unstable; urgency=low
 
   * Include patch 02_sunlen_nonbsd_sock.patch from upstream (see
