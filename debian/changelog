@@ -1,12 +1,13 @@
-xtrans (1.0.3-2) UNRELEASED; urgency=low
+xtrans (1.0.3-2) unstable; urgency=low
 
   * Remove Fabio from Uploaders, with his permission.
   * Add XS-Vcs-Git and XS-Vcs-Browser.
   * Drop outdated CVS info from the long description.
   * Complete debian/copyright from COPYING.
   * Install the upstream README.
+  * Upload to unstable.
 
- -- Julien Cristau <jcristau@debian.org>  Thu, 12 Apr 2007 18:22:08 +0200
+ -- Julien Cristau <jcristau@debian.org>  Thu, 12 Apr 2007 18:23:54 +0200
 
 xtrans (1.0.3-1) experimental; urgency=low
 
