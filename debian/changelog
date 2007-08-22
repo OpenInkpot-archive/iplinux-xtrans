@@ -1,6 +1,7 @@
 xtrans (1.0.4-1) UNRELEASED; urgency=low
 
   * New upstream release.
+  * Add upstream URL to debian/copyright.
 
  -- Brice Goglin <bgoglin@debian.org>  Wed, 22 Aug 2007 20:02:32 +0200
 
