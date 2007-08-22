@@ -1,7 +1,8 @@
-xtrans (1.0.4-1) UNRELEASED; urgency=low
+xtrans (1.0.4-1) unstable; urgency=low
 
   * New upstream release.
   * Add upstream URL to debian/copyright.
+  * Add myself to Uploaders, and remove Branden with his permission.
 
  -- Brice Goglin <bgoglin@debian.org>  Wed, 22 Aug 2007 20:02:32 +0200
 
