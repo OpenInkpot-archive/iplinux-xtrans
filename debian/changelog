@@ -1,6 +1,10 @@
 xtrans (1.1-1) UNRELEASED; urgency=low
 
   * New upstream release.
+  * debian/control updates:
+    + Add myself to Uploaders
+    + Bump Standards-Version to 3.7.3 (no changes)
+    + Drop the XS- prefix for Vcs headers
 
  -- Julien Cristau <jcristau@debian.org>  Fri, 07 Mar 2008 12:00:05 +0100
 
