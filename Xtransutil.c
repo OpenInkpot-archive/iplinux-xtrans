@@ -57,6 +57,10 @@ from The Open Group.
 #ifdef XTHREADS
 #include <X11/Xthreads.h>
 #endif
+#ifdef WIN32
+#include <X11/Xlibint.h>
+#include <X11/Xwinsock.h>
+#endif
 
 #ifdef X11_t
 
@@ -479,7 +483,7 @@ TRANS(WSAStartup) (void)
 
     PRMSG (2,"WSAStartup()\n", 0, 0, 0);
 
-    if (!wsadata.wVersion && WSAStartup(0x0101, &wsadata))
+    if (!wsadata.wVersion && WSAStartup(MAKEWORD(2,2), &wsadata))
         return 1;
     return 0;
 }

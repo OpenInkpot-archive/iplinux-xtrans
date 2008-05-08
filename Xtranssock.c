@@ -281,6 +281,14 @@ static int TRANS(SocketINETClose) (XtransConnInfo ciptr);
 #define MAXHOSTNAMELEN 255
 #endif
 
+#if defined HAVE_SOCKLEN_T || (defined(IPv6) && defined(AF_INET6))
+# define SOCKLEN_T socklen_t
+#elif defined(SVR4) || defined(__SCO__)
+# define SOCKLEN_T size_t 
+#else
+# define SOCKLEN_T int
+#endif
+
 /*
  * This provides compatibility for apps linked against system libraries
  * that don't have IPv6 support.
@@ -330,11 +338,7 @@ TRANS(SocketINETGetAddr) (XtransConnInfo ciptr)
 #endif
     struct sockaddr_in socknamev4;
     void *socknamePtr;
-#if defined(SVR4) || defined(__SCO__)
-    size_t namelen;
-#else
-    int namelen;
-#endif
+    SOCKLEN_T namelen;
 
     PRMSG (3,"SocketINETGetAddr(%p)\n", ciptr, 0, 0);
 
@@ -407,11 +411,7 @@ TRANS(SocketINETGetPeerAddr) (XtransConnInfo ciptr)
 #endif
     struct sockaddr_in 	socknamev4;
     void *socknamePtr;
-#if defined(SVR4) || defined(__SCO__)
-    size_t namelen;
-#else
-    int namelen;
-#endif
+    SOCKLEN_T namelen;
 
 #if defined(IPv6) && defined(AF_INET6)
     if (haveIPv6 && ciptr->family == AF_INET6)
@@ -540,7 +540,7 @@ TRANS(SocketReopen) (int i, int type, int fd, char *port)
     }
 
     portlen = strlen(port) + 1; // include space for trailing null
-#ifdef BSD44SOCKETS
+#ifdef SOCK_MAXADDRLEN
     if (portlen < 0 || portlen > (SOCK_MAXADDRLEN + 2)) {
       PRMSG (1, "SocketReopen: invalid portlen %d\n", portlen, 0, 0);
       return NULL;
@@ -551,7 +551,7 @@ TRANS(SocketReopen) (int i, int type, int fd, char *port)
       PRMSG (1, "SocketReopen: invalid portlen %d\n", portlen, 0, 0);
       return NULL;
     }
-#endif /*BSD44SOCKETS*/
+#endif /*SOCK_MAXADDRLEN*/
 
     if ((ciptr = (XtransConnInfo) xcalloc (
 	1, sizeof(struct _XtransConnInfo))) == NULL)
@@ -918,7 +918,7 @@ TRANS(SocketCreateListener) (XtransConnInfo ciptr,
 			     int socknamelen, unsigned int flags)
 
 {
-    int	namelen = socknamelen;
+    SOCKLEN_T namelen = socknamelen;
     int	fd = ciptr->fd;
     int	retry;
 
@@ -998,7 +998,7 @@ TRANS(SocketINETCreateListener) (XtransConnInfo ciptr, char *port, unsigned int 
     struct sockaddr_in	    sockname;
 #endif
     unsigned short	    sport;
-    int		namelen = sizeof(sockname);
+    SOCKLEN_T	namelen = sizeof(sockname);
     int		status;
     long	tmpport;
 #ifdef XTHREADS_NEEDS_BYNAMEPARAMS
@@ -1180,7 +1180,7 @@ TRANS(SocketUNIXCreateListener) (XtransConnInfo ciptr, char *port,
 
     if (abstract) {
 	sockname.sun_path[0] = '\0';
-	namelen = sizeof(sockname);
+	namelen = offsetof(struct sockaddr_un, sun_path) + 1 + strlen(&sockname.sun_path[1]);
     }
     else
 	unlink (sockname.sun_path);
@@ -1315,7 +1315,7 @@ TRANS(SocketINETAccept) (XtransConnInfo ciptr, int *status)
 {
     XtransConnInfo	newciptr;
     struct sockaddr_in	sockname;
-    int			namelen = sizeof(sockname);
+    SOCKLEN_T		namelen = sizeof(sockname);
 
     PRMSG (2, "SocketINETAccept(%p,%d)\n", ciptr, ciptr->fd, 0);
 
@@ -1394,11 +1394,7 @@ TRANS(SocketUNIXAccept) (XtransConnInfo ciptr, int *status)
 {
     XtransConnInfo	newciptr;
     struct sockaddr_un	sockname;
-#if defined(SVR4) || defined(__SCO__)
-    size_t namelen = sizeof sockname;
-#else
-    int namelen = sizeof sockname;
-#endif
+    SOCKLEN_T 		namelen = sizeof sockname;
 
     PRMSG (2, "SocketUNIXAccept(%p,%d)\n", ciptr, ciptr->fd, 0);
 
@@ -2031,11 +2027,11 @@ TRANS(SocketUNIXConnect) (XtransConnInfo ciptr, char *host, char *port)
 
 {
     struct sockaddr_un	sockname;
-    int			namelen;
+    SOCKLEN_T		namelen;
 
 #if defined(hpux) && defined(X11_t)
     struct sockaddr_un	old_sockname;
-    int			old_namelen;
+    SOCKLEN_T		old_namelen;
 #endif
 
     int abstract = 0;
@@ -2146,8 +2142,13 @@ TRANS(SocketUNIXConnect) (XtransConnInfo ciptr, char *host, char *port)
 	    errno = olderrno;
 	    
 	    /*
-	     * If the error was ENOENT, the server may be starting up
-	     * and we should try again.
+	     * If the error was ENOENT, the server may be starting up; we used
+	     * to suggest to try again in this case with
+	     * TRANS_TRY_CONNECT_AGAIN, but this introduced problems for
+	     * processes still referencing stale sockets in their environment.
+	     * Hence, we now return a hard error, TRANS_CONNECT_FAILED, and it
+	     * is suggested that higher level stacks handle retries on their
+	     * level when they face a slow starting server.
 	     *
 	     * If the error was EWOULDBLOCK or EINPROGRESS then the socket
 	     * was non-blocking and we should poll using select
@@ -2161,14 +2162,14 @@ TRANS(SocketUNIXConnect) (XtransConnInfo ciptr, char *host, char *port)
 	    else if (olderrno == EINTR)
 		return TRANS_TRY_CONNECT_AGAIN;
 	    else if (olderrno == ENOENT) {
-		/*
-		* If opening as abstract socket failed, try again "normally"
-		*/
-		if (abstract)
+		/* If opening as abstract socket failed, try again normally */
+		if (abstract) {
 		    ciptr->transptr->flags &= ~(TRANS_ABSTRACT);
-		return TRANS_TRY_CONNECT_AGAIN;
-	    }
-	    else {
+		    return TRANS_TRY_CONNECT_AGAIN;
+		} else {
+		    return TRANS_CONNECT_FAILED;
+		}
+	    } else {
 		PRMSG (2,"SocketUNIXConnect: Can't connect: errno = %d\n",
 		       EGET(),0, 0);
 
@@ -2220,7 +2221,7 @@ TRANS(SocketBytesReadable) (XtransConnInfo ciptr, BytesReadable_t *pend)
 #ifdef WIN32
     {
 	int ret = ioctlsocket ((SOCKET) ciptr->fd, FIONREAD, (u_long *) pend);
-	errno = WSAGetLastError();
+	if (ret == SOCKET_ERROR) errno = WSAGetLastError();
 	return ret;
     }
 #else
@@ -2247,7 +2248,7 @@ TRANS(SocketRead) (XtransConnInfo ciptr, char *buf, int size)
     {
 	int ret = recv ((SOCKET)ciptr->fd, buf, size, 0);
 #ifdef WIN32
-	errno = WSAGetLastError();
+	if (ret == SOCKET_ERROR) errno = WSAGetLastError();
 #endif
 	return ret;
     }
@@ -2267,7 +2268,7 @@ TRANS(SocketWrite) (XtransConnInfo ciptr, char *buf, int size)
     {
 	int ret = send ((SOCKET)ciptr->fd, buf, size, 0);
 #ifdef WIN32
-	errno = WSAGetLastError();
+	if (ret == SOCKET_ERROR) errno = WSAGetLastError();
 #endif
 	return ret;
     }
@@ -2306,7 +2307,7 @@ TRANS(SocketDisconnect) (XtransConnInfo ciptr)
 #ifdef WIN32
     { 
 	int ret = shutdown (ciptr->fd, 2);
-	errno = WSAGetLastError();
+	if (ret == SOCKET_ERROR) errno = WSAGetLastError();
 	return ret;
     }
 #else
@@ -2325,7 +2326,7 @@ TRANS(SocketINETClose) (XtransConnInfo ciptr)
 #ifdef WIN32
     {
 	int ret = close (ciptr->fd);
-	errno = WSAGetLastError();
+	if (ret == SOCKET_ERROR) errno = WSAGetLastError();
 	return ret;
     }
 #else
