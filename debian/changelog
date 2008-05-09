@@ -1,12 +1,13 @@
-xtrans (1.2-1) UNRELEASED; urgency=low
+xtrans (1.2-1) unstable; urgency=high
 
+  * High urgency upload for RC bug fix.
   * New upstream release
     + fixes abstract unix domain sockets (closes: #480142)
     + fixes xserver build on kfreebsd (closes: #472357)
     + returns failure instead of 'try again' when opening a unix domain socket
       returns ENOENT (closes: #385976)
 
- -- Julien Cristau <jcristau@debian.org>  Thu, 08 May 2008 16:52:27 +0200
+ -- Julien Cristau <jcristau@debian.org>  Fri, 09 May 2008 11:21:29 +0200
 
 xtrans (1.1-1) unstable; urgency=low
 
