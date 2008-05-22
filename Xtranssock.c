@@ -1148,7 +1148,7 @@ TRANS(SocketUNIXCreateListener) (XtransConnInfo ciptr, char *port,
 #else
     mode = 0777;
 #endif
-    if (trans_mkdir(UNIX_DIR, mode) == -1) {
+    if (!abstract && trans_mkdir(UNIX_DIR, mode) == -1) {
 	PRMSG (1, "SocketUNIXCreateListener: mkdir(%s) failed, errno = %d\n",
 	       UNIX_DIR, errno, 0);
 	(void) umask (oldUmask);
@@ -2161,7 +2161,7 @@ TRANS(SocketUNIXConnect) (XtransConnInfo ciptr, char *host, char *port)
 		return TRANS_IN_PROGRESS;
 	    else if (olderrno == EINTR)
 		return TRANS_TRY_CONNECT_AGAIN;
-	    else if (olderrno == ENOENT) {
+	    else if (olderrno == ENOENT || olderrno == ECONNREFUSED) {
 		/* If opening as abstract socket failed, try again normally */
 		if (abstract) {
 		    ciptr->transptr->flags &= ~(TRANS_ABSTRACT);
