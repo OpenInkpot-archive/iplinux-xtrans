@@ -1,3 +1,25 @@
+commit 02fcb08803dca5bb2df4f8be490a845659bd7ed3
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Mon May 12 17:49:41 2008 -0400
+
+    Connection failure for abstract socket is ECONNREFUSED, not ENOENT.
+    
+    Apropos of bug #15884.
+
+commit 906294025573d07c739894fa3b2eedc82813a379
+Author: Bill Nottingham <notting@redhat.com>
+Date:   Mon May 12 17:43:36 2008 -0400
+
+    Ignore mkdir() errors when creating the abstract socket.
+    
+    Red Hat bug #445303.
+
+commit 08134c2ce72bc43c172b6ae134d8a94a40b45c9b
+Author: James Cloos <cloos@jhcloos.com>
+Date:   Sat May 10 07:02:09 2008 -0400
+
+    Remove extraneous execute bit from .c file
+
 commit e75b9dad0ae4bc0869af81652d8259675a3c5cac
 Author: Julien Cristau <jcristau@debian.org>
 Date:   Thu May 8 16:27:29 2008 +0200
