@@ -1,3 +1,10 @@
+xtrans (1.2.1-1.oi2) unstable; urgency=low
+
+  * xutil-dev build-dependency changed to xorg-util-macros.
+  * XCS-Cross-* dependencies added.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Fri, 19 Sep 2008 00:14:24 +0700
+
 xtrans (1.2.1-1.oi1) asimov; urgency=low
 
   * OpenInkpot build.

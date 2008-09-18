@@ -2,14 +2,14 @@ Source: xtrans
 Section: gui
 Priority: optional
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net.
-Build-Depends: debhelper (>= 4.0.0), quilt, automake, xutils-dev
+Build-Depends: debhelper (>= 4.0.0), quilt, automake, xorg-util-macros
+XCS-Cross-Host-Build-Depends: debhelper (>= 4.0.0), quilt, automake, xorg-util-macros
 Standards-Version: 3.7.3
 
 Package: xtrans-dev
 Section: libdevel
 Architecture: all
 Pre-Depends: x11-common (>= 1:7.0.0)
-Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X transport library (development files)
  xtrans includes a number of routines to make X implementations
  transport-independent; at time of writing, it includes support for UNIX
