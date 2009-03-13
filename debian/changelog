@@ -1,3 +1,11 @@
+xtrans (1.2.3-1) asimov; urgency=low
+
+  * New upstream release.
+  * First build for IPlinux.
+  * Library code moved to /usr/share/xtrans
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Fri, 13 Mar 2009 18:38:34 +0600
+
 xtrans (1.2.1-1.oi2) unstable; urgency=low
 
   * xutil-dev build-dependency changed to xorg-util-macros.
