@@ -1,5 +1,5 @@
 Source: xtrans
-Section: gui
+Section: host/tools
 Priority: optional
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net.
 Build-Depends: debhelper (>= 4.0.0), autoconf, automake, xorg-util-macros
@@ -7,7 +7,6 @@ XCS-Cross-Host-Build-Depends: debhelper (>= 4.0.0), autoconf, automake, xorg-uti
 Standards-Version: 3.8.0
 
 Package: xtrans-dev
-Section: libdevel
 Architecture: all
 Pre-Depends: x11-common (>= 1:7.0.0)
 Description: X transport library (development files)

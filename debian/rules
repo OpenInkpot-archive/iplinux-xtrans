@@ -31,15 +31,16 @@ else
 	confflags += --build=$(DEB_BUILD_GNU_TYPE) --host=$(DEB_HOST_GNU_TYPE)
 endif
 
-configure: $(STAMP_DIR)/patch
-	dh_testdir
-	autoreconf -v -f -i
+#
+# Moving .c files to /usr/lib!
+#
+confflags += --includedir=/usr/lib/xtrans
 
-obj-$(DEB_BUILD_GNU_TYPE)/config.status: configure
+obj-$(DEB_BUILD_GNU_TYPE)/config.status:
 	dh_testdir
 	test -d obj-$(DEB_BUILD_GNU_TYPE) || mkdir obj-$(DEB_BUILD_GNU_TYPE)
 	cd obj-$(DEB_BUILD_GNU_TYPE) && \
-	../configure --prefix=/usr --mandir=\$${prefix}/share/man \
+	../autogen.sh --prefix=/usr --mandir=\$${prefix}/share/man \
 	             --infodir=\$${prefix}/share/info --disable-shared \
 	             $(confflags) CFLAGS="$(CFLAGS)" 
 
