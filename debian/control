@@ -2,9 +2,9 @@ Source: xtrans
 Section: gui
 Priority: optional
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net.
-Build-Depends: debhelper (>= 4.0.0), quilt, automake, xorg-util-macros
-XCS-Cross-Host-Build-Depends: debhelper (>= 4.0.0), quilt, automake, xorg-util-macros
-Standards-Version: 3.7.3
+Build-Depends: debhelper (>= 4.0.0), autoconf, automake, xorg-util-macros
+XCS-Cross-Host-Build-Depends: debhelper (>= 4.0.0), autoconf, automake, xorg-util-macros
+Standards-Version: 3.8.0
 
 Package: xtrans-dev
 Section: libdevel
