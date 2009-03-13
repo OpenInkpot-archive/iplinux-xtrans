@@ -1,3 +1,11 @@
+xtrans (1.2.3-2) asimov; urgency=low
+
+  * xtrans.pc moved to /usr/share/pkg-config too, so cross-builds can use
+    it.
+  * Cleanup of debian/rules
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Fri, 13 Mar 2009 20:59:51 +0600
+
 xtrans (1.2.3-1) asimov; urgency=low
 
   * New upstream release.
