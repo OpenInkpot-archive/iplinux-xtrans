@@ -34,7 +34,7 @@ endif
 #
 # Moving .c files to /usr/lib!
 #
-confflags += --includedir=/usr/lib/xtrans
+confflags += --includedir=/usr/share/xtrans
 
 obj-$(DEB_BUILD_GNU_TYPE)/config.status:
 	dh_testdir
