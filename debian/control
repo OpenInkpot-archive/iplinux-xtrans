@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
 Build-Depends: debhelper (>= 4.0.0), autoconf, automake, xorg-util-macros
 XCS-Cross-Host-Build-Depends: debhelper (>= 4.0.0), autoconf, automake, xorg-util-macros
-Standards-Version: 3.8.0
+Standards-Version: 3.8.4
 
 Package: xtrans-dev
 Architecture: all
