@@ -1,3 +1,15 @@
+xtrans (1.2.5-1) zelazny; urgency=low
+
+  * New upstream version
+
+  * Get rid of xsfbs
+  * Bump debhelper compat
+  * Fix typo in Maintainer field
+  * Bump Standards-Version
+  * Drop useless x11-common dependency
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 15 Apr 2010 19:54:24 +0700
+
 xtrans (1.2.3-2) asimov; urgency=low
 
   * xtrans.pc moved to /usr/share/pkg-config too, so cross-builds can use
